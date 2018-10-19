@@ -1,0 +1,34 @@
+1、unittest中重要的四个概念：test fixture、test case、 test suite、test runner
+  test case：一个TestCase的实例就是一个测试用例。包括测试前准备环境的搭建（setUp）,实现测试过程的代码（run）
+             ,以及测试后的环境还原(treaDown)。
+  test suite:对一个功能的验证往往是需要多测试用例的，可以把多的测试用例集合在一起执行，这就是产生测试套件TestSuite
+             的概念，它用来组装单个测试用例，而且TestSuite也可以嵌套TestSuite。通过addTest加载TestCase到TestSuite中
+             再返回一个TestSuite实例。
+  test runner:TextTestRunner 是用来执行测试用例的，其中run(test)用来执行TestSuite/TestSuite。测试的结果会保存到
+              TextTestResult实例中，包括运行了多少测试用例，成功了多少，失败了多少等信息。
+  test fixture:对一个测试用例环境的搭建和销毁，是一个fixture,通过覆盖TestCase的setUp()和tearDown()的方法来实现。
+               这个有什么用那？比如说在这个测试用例中需要访问数据库，那么可以在setUp()中建立数据库连接以及一些初始化
+               ，在tearDown中清除在数据库中产生的数据，然后关闭连接。
+
+2、检查比较和报告错误的方法
+3、组织单元测试用例----test1.py
+4、同一.py文件下测试用例扩充---addAndSubtraction.py
+5、测试用例进行划分，分散到不同.py文件中，便于维护。
+    ...../test_project/all_testcase.py执行所有测试用例
+                       testadd.py加法测试用例
+                       testsub.py减法测试用例
+                       count.py需要测试的文件
+6、当测试用例达到成百上千条时，add测试用例特麻烦。在TestLoader类总提供了discover()方法解决这个问题
+   TestLoader：根据各种标准负责加载测试用例，兵返回测试套件。unittest提供了可以共享了defaultTestLoader类
+              可以使用其子类和方法创建实例，如下
+              discover(start_dir, pattern="test*.py", top_level_dir=None)
+              start_dir:要测试的模块名或者测试用例目录
+              pattern="test*.py":表示用例文件名的匹配原则。“*”表示任意多个字符
+              top_level_dir=None：测试模块的顶层目录。如果没顶层（也就是说测试用例不是放在多级目录中），默认None.
+   如何使用请到test_project/all_test.py中查看。
+7、测试用例执行顺序。（1）unittest.main()这样执行顺序为默认是根据ASCII码，数字与字母的顺序：0-9， A-Z，a-z。
+                     （2）使用测试套件addTest()加载测试案例，然后执行的话是按照加入的顺序执行的
+                     （3）discover()方法加载案例也是按照ASCII码从小到大顺序加载同意目录下的测试文件的
+8、生成h5测试报告...web_test_project/report/result.html存放地址
+                                     all_test.py使用
+9、自动发邮件功能：python的smtplib模块提供了一种方便的途径发送电子邮件
