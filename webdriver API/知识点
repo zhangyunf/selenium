@@ -1,0 +1,164 @@
+1、浏览器操作
+   浏览器操作一般都在 selenium.remote.webdriver 里
+   获取一些常见的如网址、title、句柄时，都是用@property修饰的
+   1)、获取当前网址 current_url
+   2)、获取当前title title
+   3)、获取当前的句柄 current_window_handler
+   4)、获取所有句柄 window_handlers
+   下面是需要浏览器做出改变的操作
+   1)、加载网址 get("网址")
+   2)、返回上一页 back()
+   3)、加载下一页 forward()
+   4)、关闭当前操作的页面close()
+   5)、关闭整个浏览器 quit()
+   6)、刷新页面 refresh()
+   7)、保存浏览器的截图到一个png文件里 get_sreenshot_as_file(filename)
+   8)、返回浏览器当前的位置 get_window_position()
+   9)、设置浏览器的尺寸 set_window_size(width, height,windowHandle='current')
+   10)、设置浏览器最大化 maxsize_window()
+
+2、元素定位
+  1)、 元素的八种定位方法id、name、class name、tag name、link text、partial link text、xpath、 css selector
+  2)、xpath:绝对路径、相对路径"/html/body/div"、"//*[@id='kw']"或者//"input[@id='kw']"
+  3)、css .class、#id、input、*(所有元素)、[arritude=value]
+  4)、by定位 from selenium.webdriver.common.by import By
+
+3、元素操作
+  Webdriver中与页面交互都是通过WebElement接口提供
+     clear() 清空文本
+     click() 点击
+     send_keys(value) 填写数据
+     submit() 表单提交，也可用于没有提交按钮的时候
+     text 返回元素的文本
+     size 返回元素的尺寸
+     get_arritude(name) 获取元素的属性值
+     is_displayed() 查看元素是否可见
+4、鼠标操作 ActionChains  from selenium.webdriver.common.action_chains import ActionChains
+click(on_element=None) ——单击鼠标左键
+click_and_hold(on_element=None) ——点击鼠标左键，不松开
+context_click(on_element=None) ——点击鼠标右键
+double_click(on_element=None) ——双击鼠标左键
+drag_and_drop(source, target) ——拖拽到某个元素然后松开
+drag_and_drop_by_offset(source, xoffset, yoffset) ——拖拽到某个坐标然后松开
+key_down(value, element=None) ——按下某个键盘上的键
+key_up(value, element=None) ——松开某个键
+move_by_offset(xoffset, yoffset) ——鼠标从当前位置移动到某个坐标
+move_to_element(to_element) ——鼠标移动到某个元素
+move_to_element_with_offset(to_element, xoffset, yoffset) ——移动到距某个元素（左上角坐标）多少距离的位置
+perform() ——执行链中的所有动作
+release(on_element=None) ——在某个元素位置松开鼠标左键
+send_keys(*keys_to_send) ——发送某个键到当前焦点的元素
+send_keys_to_element(element, *keys_to_send) ——发送某个键到指定元素
+5、键盘事件 keys from selenium.webdriver.common.keys import keys
+    BACK_SPACE = BACKSPACE   #删除键
+    TAB = '\ue004'   #TAB键
+    ENTER = '\ue007'   #回车键
+    SHIFT = '\ue008'   #Shift键
+    LEFT_CONTROL = CONTROL   #Ctrl 键
+    ALT = '\ue00a'           #Alt 键
+    ESCAPE = '\ue00c'   #ECS键
+    SPACE = '\ue00d'    #空格键
+    PAGE_UP = '\ue00e'   #PgUp 键
+    PAGE_DOWN = '\ue00f' #PgDwon 键
+    END = '\ue010'    #END 键
+    HOME = '\ue011'   #HOME 键
+    LEFT = '\ue012'  #左键
+    UP = '\ue013'    #上键
+    ARROW_RIGHT = RIGHT  #右键
+    DOWN = '\ue015'      #下键
+    INSERT = '\ue016'    #insert键
+    DELETE = '\ue017'    #del键
+    SEMICOLON = '\ue018'  #';'键
+    EQUALS = '\ue019'     #'='键
+　　#数字键盘
+    NUMPAD0 = '\ue01a'  # number pad keys
+    NUMPAD1 = '\ue01b'
+    NUMPAD2 = '\ue01c'
+    NUMPAD3 = '\ue01d'
+    NUMPAD4 = '\ue01e'
+    NUMPAD5 = '\ue01f'
+    NUMPAD6 = '\ue020'
+    NUMPAD7 = '\ue021'
+    NUMPAD8 = '\ue022'
+    NUMPAD9 = '\ue023'
+    MULTIPLY = '\ue024' # '*' 键
+    ADD = '\ue025'   # '+' 键
+    SEPARATOR = '\ue026'  #','键
+    SUBTRACT = '\ue027'  # '-' 键
+    DECIMAL = '\ue028'   # '.'键
+    DIVIDE = '\ue029'    #'/'键
+    F1 = '\ue031'  # function  keys
+    F2 = '\ue032'
+    F3 = '\ue033'
+    F4 = '\ue034'
+    F5 = '\ue035'
+    F6 = '\ue036'
+    F7 = '\ue037'
+    F8 = '\ue038'
+    F9 = '\ue039'
+    F10 = '\ue03a'
+    F11 = '\ue03b'
+    F12 = '\ue03c'
+    META = '\ue03d'
+    COMMAND = '\ue03d'
+6、元素等待
+  1)、显示等待
+
+显式等待:等待某个条件成立才会继续执行，否则抛出TimeoutException。
+WebDriverWait(driver, timeout, poll_frequency=0.5, ignored_exceptions=None)
+driver:浏览器驱动程序
+timeout:最长超时时间
+poll_frequency：休眠时间的间隔时长，默认5秒
+
+
+通常和until()或者until_not()方法配合使用。
+until():
+until_not()
+
+expected_conditions类提供一些预期条件的实现
+
+title_is() 用于判断标题是否是xx
+title_contains 用于判断博阿提是否包含xx信息
+presence_of_element_located 元素存不存在这个页面
+visibility_of_element_located 元素是或否可见
+visibility_of 是否可见
+presence_of_all_elements_located 判断一组元素是否存在
+text_to_be_present_in_element 判断元素是否有xx文本信息
+text_to_be_present_in_element_value 判断元素值知否有xx文本信息
+frame_to_be_available_and_switch_to_it 表单是否可用，并切换到该表单
+invisibility_of_element_licated 判断元素是否隐藏
+element_to_be_clickable 判断元素是否点击，它处于可见和启动状态
+staleness_of 等到一个元素不再是衣服与DOM
+element_to_be_selected 被选中的元素
+element_located_to_be_selected 一个期望的元素位于被选中
+element_selection_state_to_be 一个期望检查如果给定的元素被选中
+element_located_selection_state_to_be 期望找到一个元素并检查是否选择状态
+alert_is_present 预期一个警告信息
+
+  2)、隐式等待
+  隐式等待(implicitly_wait())：通过一定时长的等待页面元素加载完成。如果超时还没有加载完成会抛出NOSuchElementException.
+
+  3)、time等待
+  import time
+  time.sleep(2)
+7、多表单切换 html中通过iframe嵌入一个页面,id属性为if
+  switch_to_frame(id="if")
+8、多窗口切换
+ switch_to_window(handler)
+9、警告框处理
+switch_to_alert() 跳转到警告框上
+text 返回alert/confirm/prompt 中的文字信息
+accept 点击确认按钮
+dismiss 点击取消按钮
+send_keys 输入值
+10、上传文件
+11、下载文件
+12、操作Cookie(浏览器缓存)
+13、调用javaScript
+ execute_script()。如滚动条的操作
+ js = "var q=document.documentElement.scrollTop=0"
+ driver.execute_script(js)
+14、验证码处理
+通过python_tessseract
+
+
